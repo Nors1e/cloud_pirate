@@ -1,4 +1,4 @@
-# cloud_pirate
+# Cloud Pirate
 This program compares and contrasts cloud service pricing between large service providers AWS and Azure. User's will be able to then create and destroy EC2 Instances as well as
 
 ## Motivation

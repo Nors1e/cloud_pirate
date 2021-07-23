@@ -14,20 +14,9 @@ response = pricing.get_products(
      MaxResults=20
 )
 
-# # stores data in json file 
-# with open('data.json', 'w') as fp:
-#     # convert the pricelist entries
-#     for i, entry in enumerate(response["PriceList"]):
-#         response["PriceList"][i] = json.loads(entry)
-#     json.dump(response, fp)
+# stores data in json file 
 with open('data.json', 'w') as fp:
-    # instantiate an empty list
-    prices = []
-    # iterate over the price list in the response
-    for price_string in response["PriceList"]:
-        # price is a string of json, so lets deserialize it
-        price_data = json.loads(price_string)
-        # now that we have a data structure, let's add it to our list
-        prices.append(price_data)
-    # dump the entire price list as json to a file
-    json.dump(prices, fp)
+    # convert the pricelist entries
+    for i, entry in enumerate(response["PriceList"]):
+        response["PriceList"][i] = json.loads(entry)
+    json.dump(response, fp)

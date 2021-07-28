@@ -6,16 +6,13 @@
 #load params into a new json file
 
 
+result = {'FormatVersion': 'aws_v1', 'PriceList': ['{"product":{"productFamily":"Compute Instance","attributes":{"enhancedNetworkingSupported":"Yes","intelTurboAvailable":"No","memory":"256 GiB","dedicatedEbsThroughput":"7000 Mbps","vcpu":"64"}}}']}
+
+
 #triggers if the type of addressed keyword is a Dict
-#may run into issues with JSON
+#will run into issues with JSON
 #Store result into variable
-def data_iterator(data,keyword):
-    if isinstance(data, dict):
-        foo = data.keys()
-    elif isinstance(data, list):
-        foo = data
-    else:
-        pass
+def dict_iterator(data,keyword):
     for key in dict_data.keys():
         #checks if keyword is equal to the iterated position
         if key == keyword:
@@ -59,13 +56,14 @@ def dict_iterator(data,keyword):
 
 
 #MAIN
+#checks if the data is dict or list
+#potentially a function of it's own
+if isinstance(data, dict):
+    foo = data.keys()
+elif isinstance(data, list):
+    foo = data
+    print("LIST")
+else:
+    pass
 
-
-
-
-result = {'FormatVersion': 'aws_v1', 'PriceList': ['{"product":{"productFamily":"Compute Instance","attributes":{"enhancedNetworkingSupported":"Yes","intelTurboAvailable":"No","memory":"256 GiB","dedicatedEbsThroughput":"7000 Mbps","vcpu":"64"}}}']}
-
-
-
-resu
 

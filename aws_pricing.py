@@ -16,7 +16,7 @@ response = pricing.get_products(
      MaxResults=20
 )
 
-#parses through valid JSON string and converts it to python dict
+#parses through valid JSON string and converts it to python dict for easy access
 for entry_string in response["PriceList"]:
     entry = json.loads(entry_string)
     #access to keys 

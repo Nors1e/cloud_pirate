@@ -53,37 +53,19 @@ for key in entry.get('product', {}).get('attributes', {}):
     #prints key's
     print(key)
 
-####user input version
 usr_input = input("from the list: ")
+#iterates and prints keys associated with
+print(entry.get('product', {}).get('attributes', {}).get(str(usr_input), {}))
 
-while usr_input != 'q':
-    #collects keys and displays them
-    for key in entry.get('product', {}).get('attributes', {}):
-        #prints key's
-        print(key)
-
-
-    usr_input = input("from the list: ")
-    #iterates and prints keys associated with
-    print(entry.get('product', {}).get('attributes', {}).get(str(usr_input), {}))
-
-    # store information in dictionary
-    product_attributes = {}
+# store information in dictionary
+product_attributes = {}
 
 
-    for item in [entry]:
-        retrieved_item = item.get("product",{}).get("attributes",{}).get(str(usr_input), {})
-        product_attributes[str(usr_input)] = retrieved_item
+for item in [entry]:
+    retrieved_item = item.get("product",{}).get("attributes",{}).get(str(usr_input), {})
+    product_attributes[str(usr_input)] = retrieved_item
 
 print("Your saved dict: ", product_attributes)
-
-# product_attributes = {}
-
-# for item in [entry]:
-    
-#     retrieved_item = item.get("product",{}).get("attributes",{}).get(, {})
-#     product_attributes[retrieved_item] = retrieved_item
-
 
 
 

@@ -37,5 +37,5 @@ def get_aws_products():
         price = entry.get('terms').get('OnDemand').get(unit_num).get('priceDimensions').get("pricePerUnit")
         product_attributes['sku'] = sku_num
         product_attributes['price'] = price
-
+#TODO: Fix the price output of aws Price, currently shows 'None'
     return product_attributes

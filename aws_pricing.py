@@ -68,7 +68,7 @@ for item in [entry]:
 print("Your saved dict: ", product_attributes)
 
 
-
+entry.get('terms').get('OnDemand')
 
 
 

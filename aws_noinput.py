@@ -35,6 +35,8 @@ unit_num_one = sku_num + '.' + 'JRTCKXETXF' + '.' + '6YS6EN2CT7'
 
 # directs paths to gather information
 for item in [entry]:
-    price = entry.get('terms').get('OnDemand').get(unit_num).get('priceDimensions').get("pricePerUnit")
+    price = entry.get('terms').get('OnDemand').get(unit_num).get('priceDimensions').get(unit_num_one).get("pricePerUnit").get('USD')
     product_attributes['sku'] = sku_num
     product_attributes['price'] = price
+
+print(product_attributes)

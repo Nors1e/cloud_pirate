@@ -2,7 +2,6 @@
 import requests
 import json
 
-def get_azure_holding():
 response = requests.get("https://prices.azure.com/api/retail/prices?$filter=serviceName eq 'Virtual Machines'")
 
 response_items = response.json()

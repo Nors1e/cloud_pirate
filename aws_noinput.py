@@ -21,24 +21,13 @@ def get_aws_products():
         MaxResults=20
     )
 
+product_attributes = {}
 
-    for entry_string in response["PriceList"]:
-        #converts json object data to dictionary
-        entry = json.loads(entry_string)
+# stores info in a list due to overwriting and converts data into json
+for entry_string in response["PriceList"]:
+    entry = json.loads(entry_string)
+    on_demand = entry["terms"]["OnDemand"].popitem()[1]
+    product_attributes[on_demand["sku"]] = on_demand["priceDimensions"].popitem()[1]["pricePerUnit"]
+print(product_attributes)
 
-
-    # creates dictionary
-    product_attributes = {}
-
-    #initializes variables to collect nested information
-    sku_num = entry.get('product').get('sku')
-    unit_num = sku_num + '.' + 'JRTCKXETXF'
-    unit_num_one = sku_num + '.' + 'JRTCKXETXF' + '.' + '6YS6EN2CT7'
-
-    # directs paths to gather information
-    for item in [entry]:
-        price = entry.get('terms').get('OnDemand').get(unit_num).get('priceDimensions').get(unit_num_one).get("pricePerUnit").get('USD')
-        product_attributes['sku'] = sku_num
-        product_attributes['unitPrice'] = price
-
-    return product_attributes
+#TODO: determine the cheapest option of aws

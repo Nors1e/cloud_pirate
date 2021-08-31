@@ -30,4 +30,11 @@ for entry_string in response["PriceList"]:
     product_attributes[on_demand["sku"]] = on_demand["priceDimensions"].popitem()[1]["pricePerUnit"]
 print(product_attributes)
 
-#TODO: determine the cheapest option of aws
+#servers sorted in ascending order based on price
+sort_servers = dict(sorted(product_attributes.items(), key=lambda item: float(item[1]["USD"])))
+
+for k,v in sort_servers.items():
+    if v["USD"] != 0:
+        sort_servers[k] = v
+
+print(sort_servers)

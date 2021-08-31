@@ -3,23 +3,23 @@
 import json
 import boto3
 
-def get_aws_products():
-    #desired_region = input("Input your desired region: ")
-    pricing = boto3.client('pricing', region_name='us-east-1')
+
+#desired_region = input("Input your desired region: ")
+pricing = boto3.client('pricing', region_name='us-east-1')
 
 
-    #sets filters for data
-    response = pricing.get_products(
-        ServiceCode='AmazonEC2',
-        Filters = [
-            # TODO: let the user input filters 
-            {'Type' :'TERM_MATCH', 'Field':'operatingSystem', 'Value':'Windows'                     },
-            {'Type' :'TERM_MATCH', 'Field':'vcpu',            'Value':'64'                          },
-            {'Type' :'TERM_MATCH', 'Field':'memory',          'Value':'256 GiB'                     },
-            {'Type' :'TERM_MATCH', 'Field':'location',        'Value':'US West (N. California)'     }
-        ],
-        MaxResults=20
-    )
+#sets filters for data
+response = pricing.get_products(
+    ServiceCode='AmazonEC2',
+    Filters = [
+        # TODO: let the user input filters 
+        {'Type' :'TERM_MATCH', 'Field':'operatingSystem', 'Value':'Windows'                     },
+        {'Type' :'TERM_MATCH', 'Field':'vcpu',            'Value':'64'                          },
+        {'Type' :'TERM_MATCH', 'Field':'memory',          'Value':'256 GiB'                     },
+        {'Type' :'TERM_MATCH', 'Field':'location',        'Value':'US West (N. California)'     }
+    ],
+    MaxResults=20
+)
 
 product_attributes = {}
 
@@ -28,13 +28,10 @@ for entry_string in response["PriceList"]:
     entry = json.loads(entry_string)
     on_demand = entry["terms"]["OnDemand"].popitem()[1]
     product_attributes[on_demand["sku"]] = on_demand["priceDimensions"].popitem()[1]["pricePerUnit"]
-print(product_attributes)
 
 #servers sorted in ascending order based on price
 sort_servers = dict(sorted(product_attributes.items(), key=lambda item: float(item[1]["USD"])))
 
-for k,v in sort_servers.items():
-    if v["USD"] != 0:
-        sort_servers[k] = v
+sort_servers = {k:v for k,v in sort_servers.items() if float(v["USD"]) != 0.0000000}
 
 print(sort_servers)

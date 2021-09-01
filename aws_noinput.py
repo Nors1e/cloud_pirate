@@ -32,6 +32,15 @@ for entry_string in response["PriceList"]:
 #servers sorted in ascending order based on price
 sort_servers = dict(sorted(product_attributes.items(), key=lambda item: float(item[1]["USD"])))
 
-sort_servers = {k:v for k,v in sort_servers.items() if float(v["USD"]) != 0.0000000}
+new_servers = {}
+for k,v in sort_servers.items():
+    if float(v["USD"]) != 0.0000000:
+        new_servers[k] = v
 
-print(sort_servers)
+print(new_servers)
+
+dict_pairs = new_servers.items()
+pairs_iterator = iter(dict_pairs)
+first_pair = next(pairs_iterator)
+
+print(first_pair)

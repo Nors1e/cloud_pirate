@@ -2,7 +2,7 @@
 import json
 import boto3
 
-#TODO: Add a way for the program to detect where the user is and base regionality on that 
+
 #desired_region = input("Input your desired region: ")
 pricing = boto3.client('pricing', region_name='us-east-1')
 
@@ -24,17 +24,18 @@ response = pricing.get_products(
 product_attributes = {}
 
 # stores info in a list due to overwriting and converts data into json
+#TODO: add a way to include the product name, allow the user to query product information associated with that product
 for entry_string in response["PriceList"]:
     entry = json.loads(entry_string)
-#TODO: add a way to include the product name, allow the user to query product information associated with that product
+
     sku_num = entry.get('product').get('sku')
     unit_num = sku_num + '.' + 'JRTCKXETXF'
     unit_num_one = sku_num + '.' + 'JRTCKXETXF' + '.' + '6YS6EN2CT7'
 
     on_demand = entry["terms"]["OnDemand"].popitem()[1]
-    x = on_demand.get("priceDimensions").get(unit_num_one)['description']
-    print(x)
+    desc_variable = on_demand.get("priceDimensions").get(unit_num_one)["description"]
     product_attributes[on_demand["sku"]] = on_demand["priceDimensions"].popitem()[1]["pricePerUnit"]
+    product_attributes[on_demand["sku"]]["description"] = desc_variable
 
 
 #servers sorted in ascending order based on price
@@ -44,6 +45,14 @@ new_servers = {}
 for k,v in sort_servers.items():
     if float(v["USD"]) != 0.0000000:
         new_servers[k] = v
+
+server_len = int(input("how many sorted servers would you like to see?"))
+
+if server_len <= len(new_servers.keys()) and isinstance(server_len, int):
+    for i in new_servers:
+else:
+    print("please enter a valid number")
+
 
 print(new_servers)
 

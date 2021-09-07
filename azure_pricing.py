@@ -13,5 +13,3 @@ for i in range(len(response_items["Items"])):
             azure_dictionary['unitPrice'] = response_items["Items"][i]['unitPrice']
             #retrieve SKU
             azure_dictionary['sku'] = response_items["Items"][i]['skuId']
-
-    return azure_dictionary

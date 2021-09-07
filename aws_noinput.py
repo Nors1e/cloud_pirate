@@ -2,7 +2,6 @@
 import json
 import boto3
 
-
 #desired_region = input("Input your desired region: ")
 pricing = boto3.client('pricing', region_name='us-east-1')
 
@@ -13,9 +12,9 @@ response = pricing.get_products(
     Filters = [
         # TODO: let the user input filters 
         {'Type' :'TERM_MATCH', 'Field':'operatingSystem', 'Value':'Windows'                     },
-        {'Type' :'TERM_MATCH', 'Field':'vcpu',            'Value':'64'                          },
-        {'Type' :'TERM_MATCH', 'Field':'memory',          'Value':'256 GiB'                     },
-        {'Type' :'TERM_MATCH', 'Field':'location',        'Value':'US West (N. California)'     }
+        # {'Type' :'TERM_MATCH', 'Field':'vcpu',            'Value':'64'                          },
+        # {'Type' :'TERM_MATCH', 'Field':'memory',          'Value':'256 GiB'                     },
+        # {'Type' :'TERM_MATCH', 'Field':'location',        'Value':'US West (N. California)'     }
     ],
     MaxResults=20
 )
@@ -49,7 +48,7 @@ for k,v in sort_servers.items():
 server_len = int(input("how many sorted servers would you like to see?"))
 
 if server_len <= len(new_servers.keys()) and isinstance(server_len, int):
-    for i in new_servers:
+    print("hell")
 else:
     print("please enter a valid number")
 

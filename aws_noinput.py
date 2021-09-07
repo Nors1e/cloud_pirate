@@ -47,10 +47,12 @@ for k,v in sort_servers.items():
 
 server_len = int(input("how many sorted servers would you like to see?"))
 
+#TODO: Create a way for users to iterate through and print out a set index amount
 if server_len <= len(new_servers.keys()) and isinstance(server_len, int):
     print("hell")
 else:
     print("please enter a valid number")
+
 
 
 print(new_servers)
@@ -60,5 +62,3 @@ pairs_iterator = iter(dict_pairs)
 first_pair = next(pairs_iterator)
 
 print(first_pair)
-
-#TODO: Create a way for users to iterate through and print out a set index amount

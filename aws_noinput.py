@@ -1,9 +1,7 @@
 #TODO: Convert this to a def page to call to main
-
 import json
 import boto3
 
-pricing = boto3.client('pricing', region_name='us-east-1')
 
 # sorts through descriptions in dictionaries
 def desc_type(desc):
@@ -18,6 +16,79 @@ def desc_type(desc):
             return i
 
 
+#TODO: add a way to include the product name, allow the user to query product information associated with that product https://aws.amazon.com/ec2/instance-types/ (ex: compute optimized, gen purpose, etc...)
+
+with open("text_files/title.txt", "r") as f:
+  print(f.read())
+
+print("1. US East (Ohio)")	
+print("2. US East (N. Virginia)")
+print("3. US West (N. California)")
+print("4. US West (Oregon)")
+
+# User input location
+host_location = input("Choose your pricing zone: ")
+
+
+# User input sorting location
+if host_location == 1:
+    location = 'us-east-2'
+elif host_location == 2:
+    location = 'us-east-1'
+elif host_location == 3:
+    location = 'us-west-1'
+elif host_location == 4:
+    location = 'us-west-2'
+else:
+    location = 'us-east-1'
+
+# initializing client
+#TODO: Add redundancy
+pricing = boto3.client('pricing', region_name=location)
+print("\n")
+
+
+# print("1. General purpose")
+# print("2. Compute optimized")
+# print("3. Memory optimized")
+# print("4. Storage optimized")
+
+# server_purpose = input("Choose server requirements: ")
+# print("\n")
+
+# TODO: propose alternative instance types like compute-memory-storage
+# if server_purpose == 1:
+#     purpose =  # General Purpose
+# elif server_purpose == 2:
+#     purpose = # Compute
+# elif server_purpose == 3:
+#     purpose = # Memory
+# elif server_purpose == 4:
+#     purpose = # Storage
+
+# server_spec = input("Choose server specifications: ") this will be like vcpu and memory
+
+print("1. US East (Ohio)")	
+print("2. US East (N. Virginia)")
+print("3. US West (N. California)")
+print("4. US West (Oregon)")
+
+
+desired_location = int(input("Choose desired server zone: "))
+
+
+# User input sorting location
+if desired_location == 1:
+    location_serv = 'US East (Ohio)'
+elif desired_location == 2:
+    location_serv = 'US East (N. Virginia)'
+elif desired_location == 3:
+    location_serv = 'US West (N. California)'
+elif desired_location == 4:
+    location_serv = 'US West (Oregon)'
+
+print(location_serv)
+print("___________________")
 # sets filters for data
 response = pricing.get_products(
     ServiceCode='AmazonEC2',
@@ -26,10 +97,11 @@ response = pricing.get_products(
         {'Type' :'TERM_MATCH', 'Field':'operatingSystem', 'Value':'Windows'                     },
         {'Type' :'TERM_MATCH', 'Field':'vcpu',            'Value':'64'                          },
         {'Type' :'TERM_MATCH', 'Field':'memory',          'Value':'256 GiB'                     },
-        {'Type' :'TERM_MATCH', 'Field':'location',        'Value':'US West (N. California)'     }
+        {'Type' :'TERM_MATCH', 'Field':'location',        'Value':location_serv                 }
     ],
-    MaxResults=20
+    MaxResults=100
 )
+
 
 # products_paginator = pricing.get_paginator("get_products")
 # product_responses = products_paginator.paginate(ServiceCode="AmazonEC2", Filters=[
@@ -40,11 +112,9 @@ response = pricing.get_products(
 #         {'Type' :'TERM_MATCH', 'Field':'location',        'Value':'US West (N. California)'     }
 #     ])
 
-
 product_attributes = {}
 
 # stores info in a list due to overwriting and converts data into json
-#TODO: add a way to include the product name, allow the user to query product information associated with that product
 for entry_string in response["PriceList"]:
     entry = json.loads(entry_string)
 
@@ -76,12 +146,10 @@ for key,value in sort_price.items():
     if float(value["USD"]) != 0.0000000:
         new_servers[key] = value
 
-print(new_servers)
 
+server_len = int(input("how many servers would you like to see?"))
 
-server_len = int(input("how many sorted servers would you like to see?"))
-
-#TODO: Create a way for users to iterate through and print out a set index amount
+# for users to iterate through and print out a set index amount
 for index, (key, value) in enumerate(new_servers.items()):
     if index < server_len:
         print(key, value)

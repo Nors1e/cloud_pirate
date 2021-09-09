@@ -6,6 +6,7 @@ response = requests.get("https://prices.azure.com/api/retail/prices?$filter=serv
 
 response_items = response.json()
 
+
 azure_dictionary = {}
 for i in range(len(response_items["Items"])):
         if response_items["Items"][i]["location"] == 'US Central':
@@ -13,3 +14,5 @@ for i in range(len(response_items["Items"])):
             azure_dictionary['unitPrice'] = response_items["Items"][i]['unitPrice']
             #retrieve SKU
             azure_dictionary['sku'] = response_items["Items"][i]['skuId']
+
+print(azure_dictionary)

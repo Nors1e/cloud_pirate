@@ -153,3 +153,5 @@ server_len = int(input("how many servers would you like to see?"))
 for index, (key, value) in enumerate(new_servers.items()):
     if index < server_len:
         print(key, value)
+
+46B3SA4DWP3V574P {'USD': '2.9440000000', 'description': '$2.944 per Windows m4.16xlarge Dedicated Host Instance hour', 'type': 'm4.16xlarge'}

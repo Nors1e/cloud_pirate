@@ -87,6 +87,15 @@ elif desired_location == 3:
 elif desired_location == 4:
     location_serv = 'US West (Oregon)'
 
+
+keyword = input("Would you like to search via keyword(ie: SQL)(y/n)? ")
+if keyword == 'y':
+    # Search for keyword
+else:
+    # continue
+
+
+
 print(location_serv)
 print("___________________")
 # sets filters for data
@@ -147,11 +156,16 @@ for key,value in sort_price.items():
         new_servers[key] = value
 
 
+# keyword = input("Would you like to search via keyword(ie: SQL)(y/n)? ")
+# if keyword == 'y':
+#     # Search for keyword
+# else:
+#     # continue
+
+
 server_len = int(input("how many servers would you like to see?"))
 
 # for users to iterate through and print out a set index amount
 for index, (key, value) in enumerate(new_servers.items()):
     if index < server_len:
         print(key, value)
-
-46B3SA4DWP3V574P {'USD': '2.9440000000', 'description': '$2.944 per Windows m4.16xlarge Dedicated Host Instance hour', 'type': 'm4.16xlarge'}

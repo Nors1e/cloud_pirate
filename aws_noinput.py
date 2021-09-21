@@ -1,4 +1,3 @@
-#TODO: Convert this to a def page to call to main
 import json
 import boto3
 
@@ -6,7 +5,6 @@ import boto3
 # sorts through descriptions in dictionaries
 def desc_type(desc):
     temp_list = []
-    # seperates words
     seperated_desc = desc.split()
     with open("text_files/instance_types.txt", 'r') as f:
         for i in f:
@@ -43,8 +41,7 @@ else:
     location = 'us-east-1'
 
 # initializing client
-#TODO: Add redundancy
-pricing = boto3.client('pricing', region_name=location)
+pricing = boto3.client('pricing', region_name='us-east-1')
 print("\n")
 
 
@@ -73,7 +70,6 @@ print("2. US East (N. Virginia)")
 print("3. US West (N. California)")
 print("4. US West (Oregon)")
 
-
 desired_location = int(input("Choose desired server zone: "))
 
 
@@ -88,16 +84,8 @@ elif desired_location == 4:
     location_serv = 'US West (Oregon)'
 
 
-keyword = input("Would you like to search via keyword(ie: SQL)(y/n)? ")
-if keyword == 'y':
-    # Search for keyword
-else:
-    # continue
 
 
-
-print(location_serv)
-print("___________________")
 # sets filters for data
 response = pricing.get_products(
     ServiceCode='AmazonEC2',
@@ -144,7 +132,6 @@ for entry_string in response["PriceList"]:
     product_attributes[on_demand["sku"]]["type"] = desc_type(product_attributes[on_demand["sku"]]["description"])
 
 
-
 # servers sorted in ascending order based on price
 sort_price = dict(sorted(product_attributes.items(), key=lambda item: float(item[1]["USD"])))
 
@@ -155,13 +142,9 @@ for key,value in sort_price.items():
     if float(value["USD"]) != 0.0000000:
         new_servers[key] = value
 
-
-# keyword = input("Would you like to search via keyword(ie: SQL)(y/n)? ")
-# if keyword == 'y':
-#     # Search for keyword
-# else:
-#     # continue
-
+print(sort_price)
+# 4X4QPK67S85XBCRY {'USD': '3.3792000000', 'description': '$3.3792 per Dedicated Windows BYOL m6i.16xlarge Instance Hour', 'type': 'm6i.16xlarge'}
+# {'sku': 'DZH318Z0CF0K/00CN', 'USD': 0.015, 'description': 'Virtual Machines DCSv2 Series', 'type': 'DCSv2'}
 
 server_len = int(input("how many servers would you like to see?"))
 

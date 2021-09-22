@@ -130,12 +130,6 @@ for key,value in aws_sort_price.items():
         aws_cleared_servers[key] = value
 
 
-# def server_count(dict_items, usr_input):
-#     for index, (key, value) in enumerate(dict_items.items()):
-#         if index < usr_input:
-#             return key, value
-
-
 server_len = int(input("How many servers would you like to see? "))
 
 # print(server_count(azure_sorted_dict, server_len))

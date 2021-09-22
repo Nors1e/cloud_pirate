@@ -61,8 +61,9 @@ elif use_case == 3:
 elif use_case == 4:
     azure_use = '(startswith(skuName,%20%27F%27))'
 
-# AWS client pricing region
+# AWS client pricing region, eliminated pricing region
 aws_pricing = boto3.client('pricing')
+
 # sets filters for data AWS
 aws_data = aws_pricing.get_products(
     ServiceCode='AmazonEC2',
@@ -129,7 +130,17 @@ for key,value in aws_sort_price.items():
         aws_cleared_servers[key] = value
 
 
-server_len = int(input("how many servers would you like to see?"))
+# def server_count(dict_items, usr_input):
+#     for index, (key, value) in enumerate(dict_items.items()):
+#         if index < usr_input:
+#             return key, value
+
+
+server_len = int(input("How many servers would you like to see? "))
+
+# print(server_count(azure_sorted_dict, server_len))
+# print(server_count(aws_cleared_servers, server_len))
+
 
 print("\n **** Azure ****")
 for index, (key, value) in enumerate(azure_sorted_dict.items()):

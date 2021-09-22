@@ -37,8 +37,12 @@ To do this look at the documentation found at: [AWS-CLI](https://docs.aws.amazon
 
 After inputting your credentialed key's you will be ready to run the program.
 
-## Running
-
+### Start File
+Begin by running your file:
+```
+python3 main.py
+```
+##### Running
 Begin by selecting  your pricing zone
 ```
 Choose your pricing zone: 

@@ -34,15 +34,19 @@ host_location = int(input("Choose your pricing zone: "))
 
 if host_location == 1:
     host_serv = 'us-east-1'
+    azure_location = 'eastus'
     aws_location_serv = 'US East (Ohio)'
 elif host_location == 2:
     host_serv = 'us-east-2'
+    azure_location = 'eastus2'
     aws_location_serv = 'US East (N. Virginia)'
 elif host_location == 3:
     host_serv = 'us-west-1'
+    azure_location = 'westus'
     aws_location_serv = 'US West (N. California)'
 elif host_location == 4:
     host_serv = 'us-west-2'
+    azure_location = 'westus2'
     aws_location_serv = 'US West (Oregon)'
 
 
@@ -79,9 +83,9 @@ aws_data = aws_pricing.get_products(
 
 
 # Sets filters Azure
-response = requests.get(f"https://prices.azure.com/api/retail/prices?$filter=serviceName%20eq%20%27Virtual%20Machines%27%20and%20priceType%20eq%20%27Consumption%27%20and%20endswith(armRegionName,%20%27{host_serv}%27)%20and%20{azure_use}%20and%20endswith(skuName,%27%20Spot%27)")
+response = requests.get(f"https://prices.azure.com/api/retail/prices?$filter=serviceName%20eq%20%27Virtual%20Machines%27%20and%20priceType%20eq%20%27Consumption%27%20and%20endswith(armRegionName,%20%27{azure_location}%27)%20and%20{azure_use}%20and%20endswith(skuName,%27%20Spot%27)")
 azure_data = response.json()
-
+print(azure_data)
 # ****** Azure ****** 
 azure_dictionary = {}
 for i in range(len(azure_data["Items"])):

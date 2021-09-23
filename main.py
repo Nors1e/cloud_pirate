@@ -33,16 +33,16 @@ print("4. US West (Oregon)")
 host_location = int(input("Choose your pricing zone: "))
 
 if host_location == 1:
-    host_serv = 'northcentralus'
+    host_serv = 'us-east-1'
     aws_location_serv = 'US East (Ohio)'
 elif host_location == 2:
-    host_serv = 'eastus'
+    host_serv = 'us-east-2'
     aws_location_serv = 'US East (N. Virginia)'
 elif host_location == 3:
-    host_serv = 'westus'
+    host_serv = 'us-west-1'
     aws_location_serv = 'US West (N. California)'
 elif host_location == 4:
-    host_serv = 'southcentralus'
+    host_serv = 'us-west-2'
     aws_location_serv = 'US West (Oregon)'
 
 
@@ -62,7 +62,7 @@ elif use_case == 4:
     azure_use = '(startswith(skuName,%20%27F%27))'
 
 # AWS client pricing region, eliminated pricing region
-aws_pricing = boto3.client('pricing')
+aws_pricing = boto3.client('pricing', region_name=host_serv)
 
 # sets filters for data AWS
 aws_data = aws_pricing.get_products(

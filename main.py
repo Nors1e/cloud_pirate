@@ -28,10 +28,15 @@ print("1. US East (Ohio, Illinois)")
 print("2. US East (N. Virginia), Texas")
 print("3. US West (N. California)")
 print("4. US West (Oregon)")
-
+print("\n")
 # User input location
-host_location = int(input("Choose your pricing zone: "))
-
+while True:
+    try:
+        host_location = int(input("Choose your pricing zone: "))
+        break
+    except ValueError:
+        print("Oops please input an integer(example: 1).")
+print("\n")
 if host_location == 1:
     host_serv = 'us-east-1'
     azure_location = 'eastus'
@@ -54,8 +59,14 @@ print("1. General Purpose(testing and development)D")
 print("2. Compute Optimized(webserver)F")
 print("3. Memory optimized(relational database)E")
 print("4. Storage Optimized(data warehousing)L")
-use_case = int(input("What will be your use case for this VM? "))
-
+print("\n")
+while True:
+    try:
+        use_case = int(input("What will be your use case for this VM? "))
+        break
+    except ValueError:
+        print("Oops please input an integer(example: 1).")
+print("\n")
 if use_case == 1:
     azure_use = '(startswith(skuName,%20%27D%27))'
 elif use_case == 2:
@@ -67,6 +78,7 @@ elif use_case == 4:
 
 # AWS client pricing region, eliminated pricing region
 aws_pricing = boto3.client('pricing', region_name=host_serv)
+
 
 # sets filters for data AWS
 aws_data = aws_pricing.get_products(
@@ -85,7 +97,7 @@ aws_data = aws_pricing.get_products(
 # Sets filters Azure
 response = requests.get(f"https://prices.azure.com/api/retail/prices?$filter=serviceName%20eq%20%27Virtual%20Machines%27%20and%20priceType%20eq%20%27Consumption%27%20and%20endswith(armRegionName,%20%27{azure_location}%27)%20and%20{azure_use}%20and%20endswith(skuName,%27%20Spot%27)")
 azure_data = response.json()
-print(azure_data)
+
 # ****** Azure ****** 
 azure_dictionary = {}
 for i in range(len(azure_data["Items"])):

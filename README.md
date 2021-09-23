@@ -37,8 +37,15 @@ To do this look at the documentation found at: [AWS-CLI](https://docs.aws.amazon
 
 After inputting your credentialed key's you will be ready to run the program.
 
-## Running
+### Start File
 
+Open your terminal.
+
+Begin by running this file:
+```
+python3 main.py
+```
+### Running
 Begin by selecting  your pricing zone
 ```
 Choose your pricing zone: 
@@ -56,8 +63,10 @@ how many servers would you like to see?
 
 Example output should be something like:
 ```
-how many servers would you like to see?3
-
+How many servers would you like to see?
+```
+Output for 3 Servers selected:
+```
  **** Azure ****
 DZH318Z0CF0K/00CN {'USD': 0.015, 'description': 'Virtual Machines DCSv2 Series', 'type': 'DCSv2'}
 DZH318Z0BQ4S/00V7 {'USD': 0.01617, 'description': 'Virtual Machines DS Series', 'type': 'DS'}

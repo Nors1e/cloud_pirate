@@ -67,6 +67,7 @@ while True:
     except ValueError:
         print("Oops please input an integer(example: 1).")
 print("\n")
+
 if use_case == 1:
     azure_use = '(startswith(skuName,%20%27D%27))'
 elif use_case == 2:

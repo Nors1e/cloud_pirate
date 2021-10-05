@@ -38,19 +38,19 @@ while True:
         print("Oops please input an integer(example: 1).")
 print("\n")
 if host_location == 1:
-    host_serv = 'us-east-1'
+    #host_serv = 'us-east-1'
     azure_location = 'eastus'
     aws_location_serv = 'US East (Ohio)'
 elif host_location == 2:
-    host_serv = 'us-east-2'
+    #host_serv = 'us-east-2'
     azure_location = 'eastus2'
     aws_location_serv = 'US East (N. Virginia)'
 elif host_location == 3:
-    host_serv = 'us-west-1'
+    #host_serv = 'us-west-1'
     azure_location = 'westus'
     aws_location_serv = 'US West (N. California)'
 elif host_location == 4:
-    host_serv = 'us-west-2'
+    #host_serv = 'us-west-2'
     azure_location = 'westus2'
     aws_location_serv = 'US West (Oregon)'
 
@@ -78,7 +78,7 @@ elif use_case == 4:
     azure_use = '(startswith(skuName,%20%27F%27))'
 
 # AWS client pricing region, eliminated pricing region
-aws_pricing = boto3.client('pricing', region_name=host_serv)
+aws_pricing = boto3.client('pricing')
 
 
 # sets filters for data AWS
@@ -156,7 +156,10 @@ server_len = int(input("How many servers would you like to see? "))
 print("\n **** Azure ****")
 for index, (key, value) in enumerate(azure_sorted_dict.items()):
     if index < server_len:
+        print(">>>>")
         print(key, value)
+        for i in key, value:
+            print(f"SKU: {i} \n Price {value.get('USD')}")
 print("\n **** AWS ****")
 for index, (key, value) in enumerate(aws_cleared_servers.items()):
     if index < server_len:

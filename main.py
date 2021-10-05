@@ -2,12 +2,16 @@ import requests
 import json
 import boto3
 
+# Finds value type using iterable position in a list of strings
+    # Finds the machine type in description
 def find_machine(index):
     split_index = index.split()
     for word in split_index:
         if split_index.index(word) == 2:
             return word
 
+# Reads in file containing instance types
+    # Compares grouped strings containing server descriptions to find machine type for AWS
 def desc_type(desc):
     temp_list = []
     seperated_desc = desc.split()
@@ -19,16 +23,38 @@ def desc_type(desc):
             return i
 
 
+# Outputs the dictionary value of a nested dictionary 
+    # Loops through nested dicts containing server information
+def output(servers):
+    for index, (key, value) in enumerate(servers.items()):
+        if index < server_len:
+            for i in key, value:
+                print(f'SKU: {key}')
+                print(f'Price: {value["USD"]}')
+                print(f'Description: {value["description"]}')
+                print(f'Type: {value["type"]} \n')
+
+# Sorts through
+    # Eliminates the prices of servers < 0.0000000
+def server_zero_eliminator(sorted_servers):
+    aws_cleared_servers = {}
+    for key,value in sorted_servers.items():
+        if float(value["USD"]) != 0.0000000:
+            aws_cleared_servers[key] = value
+    return aws_cleared_servers
+
 
 with open("text_files/title.txt", "r") as f:
   print(f.read())
 
-# Regionality is off for aws and azure, azure has central zones while aws is primarily east and west
+#TODO: Regionality is off for aws and azure, azure has central zones while aws is primarily east and west
 print("1. US East (Ohio, Illinois)")	
 print("2. US East (N. Virginia), Texas")
 print("3. US West (N. California)")
 print("4. US West (Oregon)")
 print("\n")
+
+
 # User input location
 while True:
     try:
@@ -37,6 +63,8 @@ while True:
     except ValueError:
         print("Oops please input an integer(example: 1).")
 print("\n")
+
+
 if host_location == 1:
     #host_serv = 'us-east-1'
     azure_location = 'eastus'
@@ -55,11 +83,13 @@ elif host_location == 4:
     aws_location_serv = 'US West (Oregon)'
 
 
-print("1. General Purpose(testing and development)D")
-print("2. Compute Optimized(webserver)F")
-print("3. Memory optimized(relational database)E")
-print("4. Storage Optimized(data warehousing)L")
+print("1. General Purpose(testing and development)")
+print("2. Compute Optimized(webserver)")
+print("3. Memory optimized(relational database)")
+print("4. Storage Optimized(data warehousing)")
 print("\n")
+
+
 while True:
     try:
         use_case = int(input("What will be your use case for this VM? "))
@@ -67,6 +97,7 @@ while True:
     except ValueError:
         print("Oops please input an integer(example: 1).")
 print("\n")
+
 
 if use_case == 1:
     azure_use = '(startswith(skuName,%20%27D%27))'
@@ -76,6 +107,7 @@ elif use_case == 3:
     azure_use = '(startswith(skuName,%20%27E%27))'
 elif use_case == 4:
     azure_use = '(startswith(skuName,%20%27F%27))'
+
 
 # AWS client pricing region, eliminated pricing region
 aws_pricing = boto3.client('pricing')
@@ -140,27 +172,15 @@ aws_sort_price = dict(sorted(product_attributes.items(), key=lambda item: float(
 
 azure_sorted_dict = {key: azure_dictionary[key] for key in sorted(azure_dictionary, key=lambda item: float(azure_dictionary[item]["USD"]))}
 
-# Deleting uneeded values with aws
-aws_cleared_servers = {}
-for key,value in aws_sort_price.items():
-    if float(value["USD"]) != 0.0000000:
-        aws_cleared_servers[key] = value
 
 
 server_len = int(input("How many servers would you like to see? "))
 
-# print(server_count(azure_sorted_dict, server_len))
-# print(server_count(aws_cleared_servers, server_len))
-
-
 print("\n **** Azure ****")
-for index, (key, value) in enumerate(azure_sorted_dict.items()):
-    if index < server_len:
-        print(">>>>")
-        print(key, value)
-        for i in key, value:
-            print(f"SKU: {i} \n Price {value.get('USD')}")
+
+output(azure_sorted_dict)
+
+print("----------------------------------------------------------------")
 print("\n **** AWS ****")
-for index, (key, value) in enumerate(aws_cleared_servers.items()):
-    if index < server_len:
-        print(key, value)
+
+output(server_zero_eliminator(aws_sort_price))

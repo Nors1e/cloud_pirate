@@ -2,48 +2,61 @@ import requests
 import json
 import boto3
 
-# Finds value type using iterable position in a list of strings
-    # Finds the machine type in description
-def find_machine(index):
+
+def find_machine( index ):
+    '''
+    Finds value type using iterable position in a list of strings
+    Finds the machine type in description
+    '''
     split_index = index.split()
     for word in split_index:
-        if split_index.index(word) == 2:
+        if split_index.index( word ) == 2:
             return word
 
-# Reads in file containing instance types
-    # Compares grouped strings containing server descriptions to find machine type for AWS
-def desc_type(desc):
+
+def desc_type( desc ):
+    '''
+    Reads in file containing instance types
+    Compares grouped strings containing server descriptions to find machine type for AWS
+    '''
     temp_list = []
     seperated_desc = desc.split()
-    with open("text_files/instance_types.txt", 'r') as f:
+    with open( "text_files/instance_types.txt", 'r' ) as f:
         for i in f:
-            temp_list.append(i.strip('\n'))
+            temp_list.append(i.strip( '\n' ))
     for i in seperated_desc:
         if i in temp_list:
             return i
 
 
-# Outputs the dictionary value of a nested dictionary 
-    # Loops through nested dicts containing server information
+    #TODO: Fix unused variable i
 def output(servers):
+    '''
+    Outputs the dictionary value of a nested dictionary 
+    Loops through nested dicts containing server information
+    '''
     for index, (key, value) in enumerate(servers.items()):
         if index < server_len:
             for i in key, value:
                 print(f'SKU: {key}')
-                print(f'Price: {value["USD"]}')
-                print(f'Description: {value["description"]}')
-                print(f'Type: {value["type"]} \n')
+                print(f'Price: {value[ "USD" ]}')
+                print(f'Description: {value[ "description" ]}')
+                print(f'Type: {value[ "type" ]} \n')
+
 
 # Sorts through
     # Eliminates the prices of servers < 0.0000000
 def server_zero_eliminator(sorted_servers):
+    '''
+    Stores server pricing information that is greater than 0 
+    '''
     aws_cleared_servers = {}
     for key,value in sorted_servers.items():
-        if float(value["USD"]) != 0.0000000:
+        if float(value["USD"]) > 0:
             aws_cleared_servers[key] = value
     return aws_cleared_servers
 
-
+# Prints out title to terminal
 with open("text_files/title.txt", "r") as f:
   print(f.read())
 
@@ -177,10 +190,8 @@ azure_sorted_dict = {key: azure_dictionary[key] for key in sorted(azure_dictiona
 server_len = int(input("How many servers would you like to see? "))
 
 print("\n **** Azure ****")
-
-output(azure_sorted_dict)
+output(server_zero_eliminator(azure_sorted_dict))
 
 print("----------------------------------------------------------------")
 print("\n **** AWS ****")
-
 output(server_zero_eliminator(aws_sort_price))

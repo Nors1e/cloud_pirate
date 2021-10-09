@@ -3,6 +3,7 @@ import json
 import boto3
 
 
+
 def find_machine( index ):
     '''
     Finds value type using iterable position in a list of strings
@@ -12,6 +13,7 @@ def find_machine( index ):
     for word in split_index:
         if split_index.index( word ) == 2:
             return word
+
 
 
 def desc_type( desc ):
@@ -29,7 +31,8 @@ def desc_type( desc ):
             return i
 
 
-    #TODO: Fix unused variable i
+
+
 def output(servers):
     '''
     Outputs the dictionary value of a nested dictionary 
@@ -37,15 +40,14 @@ def output(servers):
     '''
     for index, (key, value) in enumerate(servers.items()):
         if index < server_len:
-            for i in key, value:
+            for _ in key, value:
                 print(f'SKU: {key}')
                 print(f'Price: {value[ "USD" ]}')
                 print(f'Description: {value[ "description" ]}')
                 print(f'Type: {value[ "type" ]} \n')
 
 
-# Sorts through
-    # Eliminates the prices of servers < 0.0000000
+
 def server_zero_eliminator(sorted_servers):
     '''
     Stores server pricing information that is greater than 0 
@@ -55,6 +57,8 @@ def server_zero_eliminator(sorted_servers):
         if float(value["USD"]) > 0:
             aws_cleared_servers[key] = value
     return aws_cleared_servers
+
+
 
 # Prints out title to terminal
 with open("text_files/title.txt", "r") as f:
@@ -195,3 +199,5 @@ output(server_zero_eliminator(azure_sorted_dict))
 print("----------------------------------------------------------------")
 print("\n **** AWS ****")
 output(server_zero_eliminator(aws_sort_price))
+
+# TODO: Fix output so it isn't times 2

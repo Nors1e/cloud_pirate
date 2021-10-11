@@ -4,7 +4,7 @@ import boto3
 
 
 
-def find_machine( index ):
+def find_machine(index):
     '''
     Finds value type using iterable position in a list of strings
     Finds the machine type in description
@@ -16,7 +16,7 @@ def find_machine( index ):
 
 
 
-def desc_type( desc ):
+def desc_type(desc):
     '''
     Reads in file containing instance types
     Compares grouped strings containing server descriptions to find machine type for AWS
@@ -25,7 +25,7 @@ def desc_type( desc ):
     seperated_desc = desc.split()
     with open( "text_files/instance_types.txt", 'r' ) as f:
         for i in f:
-            temp_list.append(i.strip( '\n' ))
+            temp_list.append( i.strip( '\n' ) )
     for i in seperated_desc:
         if i in temp_list:
             return i
@@ -38,13 +38,12 @@ def output(servers):
     Outputs the dictionary value of a nested dictionary 
     Loops through nested dicts containing server information
     '''
-    for index, (key, value) in enumerate(servers.items()):
+    for index, (key, value) in enumerate( servers.items() ):
         if index < server_len:
-            for _ in key, value:
-                print(f'SKU: {key}')
-                print(f'Price: {value[ "USD" ]}')
-                print(f'Description: {value[ "description" ]}')
-                print(f'Type: {value[ "type" ]} \n')
+            print(f'SKU: {key}')
+            print(f'Price: {value[ "USD" ]}')
+            print(f'Description: {value[ "description" ]}')
+            print(f'Type: {value[ "type" ]} \n')
 
 
 
@@ -53,9 +52,9 @@ def server_zero_eliminator(sorted_servers):
     Stores server pricing information that is greater than 0 
     '''
     aws_cleared_servers = {}
-    for key,value in sorted_servers.items():
-        if float(value["USD"]) > 0:
-            aws_cleared_servers[key] = value
+    for key, value in sorted_servers.items():
+        if float(value[ "USD" ]) > 0:
+            aws_cleared_servers[ key ] = value
     return aws_cleared_servers
 
 

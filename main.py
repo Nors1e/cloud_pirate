@@ -146,6 +146,7 @@ aws_data = aws_pricing.get_products(
 # Sets filters Azure
 response = requests.get(f"https://prices.azure.com/api/retail/prices?$filter=serviceName%20eq%20%27Virtual%20Machines%27%20and%20priceType%20eq%20%27Consumption%27%20and%20endswith(armRegionName,%20%27{azure_location}%27)%20and%20{azure_use}%20and%20endswith(skuName,%27%20Spot%27)")
 azure_data = response.json()
+print(azure_data)
 
 # ****** Azure ****** 
 azure_dictionary = {}
